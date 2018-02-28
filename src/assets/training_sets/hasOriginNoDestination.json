@@ -1,0 +1,32 @@
+[
+  {
+    "has_origin": true,
+    "has_destination": false,
+    "text": "to horsham"
+  },
+  {
+    "has_origin": true,
+    "has_destination": false,
+    "text": "from london to horsham"
+  },
+  {
+    "has_origin": true,
+    "has_destination": false,
+    "text": "i want to be in horsham"
+  },
+  {
+    "has_origin": true,
+    "has_destination": false,
+    "text": "horsham"
+  },
+  {
+    "has_origin": true,
+    "has_destination": false,
+    "text": "i want to get to horsham"
+  },
+  {
+    "has_origin": true,
+    "has_destination": false,
+    "text": "I need to be at London"
+  }
+]

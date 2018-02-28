@@ -1,0 +1,32 @@
+[
+  {
+    "has_origin": false,
+    "has_destination": true,
+    "text": "london"
+  },
+  {
+    "has_origin": false,
+    "has_destination": true,
+    "text": "london to horsham"
+  },
+  {
+    "has_origin": false,
+    "has_destination": true,
+    "text": "from london"
+  },
+  {
+    "has_origin": false,
+    "has_destination": true,
+    "text": "I'm in london now"
+  },
+  {
+    "has_origin": false,
+    "has_destination": true,
+    "text": "I'm in london"
+  },
+  {
+    "has_origin": false,
+    "has_destination": true,
+    "text": "I'm at London right now"
+  }
+]

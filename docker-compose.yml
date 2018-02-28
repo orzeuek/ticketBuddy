@@ -1,0 +1,19 @@
+version: "3"
+services:
+  buddy:
+    build: .
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/usr/src/app
+    links:
+      - "redis"
+      - "duckling"
+  redis:
+    image: "redis:3.2"
+    ports:
+      - 6379:6379
+  duckling:
+    image: "ifelse/duckling:1.0.0"
+    ports:
+      - 8000:8000
