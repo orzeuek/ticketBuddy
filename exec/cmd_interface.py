@@ -16,16 +16,16 @@ def main():
     text = args["text"]
     session_id = args["session_id"]
 
-    src.state.set_redis_storage(redis.StrictRedis(host='redis', port=6379, db=0))
+    state_repo = StateRepository(StateStorage(host='redis', port=6379))
 
-    state = src.state.get_state(text, session_id)
+    state = state_repo.get_state(text, session_id)
     state = src.trip_planning_conversation.proceed(
         state,
         pickle.load(open(ROOT_DIR + "src/assets/trained_classifiers/stations_classifier.p", "rb"))
     )
     pprint.pprint(state)
     if (session_id is not None):
-        src.state.save_state(state, session_id)
+        state_repo.save_state(state, session_id)
 
 
 if __name__ == '__main__':
@@ -37,5 +37,6 @@ if __name__ == '__main__':
 
     import argparse, pprint, pickle, redis
     import src.state, src.trip_planning_conversation
+    from src.state import *
 
     main()

@@ -1,3 +1,4 @@
 nltk==3.2.*
 redis==2.10
 cherrypy==11
+requests==2.*

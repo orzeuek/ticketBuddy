@@ -1,6 +1,6 @@
 def main():
     stations_classifier = pickle.load(open(ROOT_DIR + "src/assets/trained_classifiers/stations_classifier.p", "rb"))
-    src.state.STATE_STORAGE = redis.StrictRedis(host='0.0.0.0', port=6379, db=0)
+    state_repo = StateRepository(StateStorage('0.0.0.0', 6379))
     while True:
         input_text = input("input json >")
         try:
@@ -9,16 +9,16 @@ def main():
             session_id = json_object["session_id"]
         except Exception:
             print("Invalid input!")
-            continue;
+            continue
 
-        state = src.state.get_state(text, session_id)
+        state = state_repo.get_state(text, session_id)
         state = src.trip_planning_conversation.proceed(
             state,
             stations_classifier
         )
         pprint.pprint(state)
         if (session_id is not None):
-            src.state.save_state(state, session_id)
+            state_repo.save_state(state, session_id)
 
 
 if __name__ == '__main__':
@@ -30,6 +30,7 @@ if __name__ == '__main__':
 
     import pprint, pickle, redis, json
     import src.state, src.trip_planning_conversation
+    from src.state import *
 
     main()
 

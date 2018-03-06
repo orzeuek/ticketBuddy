@@ -1,6 +1,6 @@
 import random
 import src.stations_extraction
-# import src.dates_extraction_via_dialogflow
+import src.dates_extraction
 
 
 def proceed(state, stations_classifier):
@@ -9,10 +9,11 @@ def proceed(state, stations_classifier):
     except Exception as e:
         print(str(e))
         pass
-    # try:
-    #     state.update(src.dates_extraction_via_dialogflow.get_date_time(state))
-    # except Exception as e:
-    #     pass
+    try:
+        src.stations_extraction.extract(state)
+        # state.update()
+    except Exception as e:
+        pass
     return state
 
 
