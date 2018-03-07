@@ -1,19 +1,24 @@
 import random
-import src.stations_extraction
-import src.dates_extraction
-
+import src.stations_extraction as stations
+import src.dates_extraction as dates
+import pprint
 
 def proceed(state, stations_classifier):
     try:
-        state.update(src.stations_extraction.extract(state, stations_classifier))
+        state.update(stations.extract(state, stations_classifier))
     except Exception as e:
-        print(str(e))
+        pprint.pprint(e)
         pass
+
     try:
-        src.stations_extraction.extract(state)
+        state.update(dates.extract(state, dates.DatesService("http://duckling:8000")))
         # state.update()
     except Exception as e:
+        pprint.pprint(e)
         pass
+
+    state.update({"prompt": get_next_missing_information_prompt(state)})
+
     return state
 
 

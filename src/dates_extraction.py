@@ -103,7 +103,10 @@ def extract(input, service):
     }
     """
 
-    date_value = service.get_from_text(input["text"])
+    return update_state(
+        input,
+        service.get_from_text(input["text"])
+    )
 
 def update_state(state, date_value):
     """
