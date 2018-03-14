@@ -11,6 +11,7 @@ Chatbot project who plan a trip journey through UK for you
 - docker friendly environment available
 - extracting stations
 - categorizing stations as origin/destination
+- dates extraction (dummy, but good enough for now)
 
 ## to-do:
 - stations group support
