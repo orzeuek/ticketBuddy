@@ -9,6 +9,9 @@ services:
     links:
       - "redis"
       - "duckling"
+    environment:
+      - REDIS_HOST=redis
+      - DUCKLING_HOST=duckling
   redis:
     image: "redis:3.2"
     ports:

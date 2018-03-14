@@ -1,6 +1,6 @@
 def main():
     stations_classifier = pickle.load(open(ROOT_DIR + "src/assets/trained_classifiers/stations_classifier.p", "rb"))
-    state_repo = StateRepository(StateStorage('0.0.0.0', 6379))
+    state_repo = StateRepository(StateStorage(conf.get_redis_host(), conf.get_redis_port()))
     while True:
         input_text = input("input json >")
         try:
@@ -31,6 +31,7 @@ if __name__ == '__main__':
     import pprint, pickle, redis, json
     import src.state, src.trip_planning_conversation
     from src.state import *
+    import config.configuration as conf
 
     main()
 

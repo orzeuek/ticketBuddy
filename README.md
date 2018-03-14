@@ -4,7 +4,7 @@ Chatbot project who plan a trip journey through UK for you
 ## how to use ?
 
 `docker-compose up`
-`curl -X GET 127.0.0.1:8080/?input_text={"text":"plan me a trip from London to Horsham","session_id":1234}`
+`wget -qO-  'http://127.0.0.1:8080/?input_text={"text":"plan me a trip from London to Horsham","session_id":1234}'`
 
 ## current work progress:
 
@@ -13,6 +13,5 @@ Chatbot project who plan a trip journey through UK for you
 - categorizing stations as origin/destination
 
 ## to-do:
-- dates extraction
 - stations group support
-- trip planning through traintickets.to
+- trip planning through traintickets.to 

@@ -21,7 +21,7 @@ def __get_test_texts():
 
 
 def test_DateService():
-    dates_service = DatesService(DATE_EXTRACTION_ROOT_URI)
+    dates_service = DatesService(conf.get_duckling_host() + ":" + conf.get_duckling_port())
     result = list(map(lambda element:
         dates_service.get_from_text(element["text"])
     , __get_test_texts()))

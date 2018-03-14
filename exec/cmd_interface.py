@@ -16,7 +16,7 @@ def main():
     text = args["text"]
     session_id = args["session_id"]
 
-    state_repo = StateRepository(StateStorage(host='redis', port=6379))
+    state_repo = StateRepository(StateStorage(host=conf.get_redis_host(), port=6379))
 
     state = state_repo.get_state(text, session_id)
     state = src.trip_planning_conversation.proceed(
@@ -38,5 +38,6 @@ if __name__ == '__main__':
     import argparse, pprint, pickle, redis
     import src.state, src.trip_planning_conversation
     from src.state import *
+    import config.configuration as conf
 
     main()

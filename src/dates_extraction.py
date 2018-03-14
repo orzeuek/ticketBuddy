@@ -31,8 +31,7 @@
 import requests
 import json
 import datetime
-
-DATE_EXTRACTION_ROOT_URI = "http://0.0.0.0:8000"
+import config.configuration as conf
 
 class DatesService:
 
