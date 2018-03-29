@@ -31,7 +31,6 @@
 import requests
 import json
 import datetime
-import config.configuration as conf
 
 class DatesService:
 

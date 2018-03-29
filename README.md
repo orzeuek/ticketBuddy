@@ -14,5 +14,7 @@ Chatbot project who plan a trip journey through UK for you
 - dates extraction (dummy, but good enough for now)
 
 ## to-do:
-- stations group support
+- invalid stations names support:
+a. populate elasticsearch with all stations index
+b. add logic to Buddy which will hit elasticsearch if station name was not found 
 - trip planning through traintickets.to 

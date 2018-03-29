@@ -7,7 +7,7 @@ def get_redis_port():
     return os.getenv('REDIS_PORT', '6379')
 
 def get_duckling_host():
-    return os.getenv('DUCKLING_HOST', 'http://0.0.0.0')
+    return os.getenv('DUCKLING_HOST', '0.0.0.0')
 
 def get_duckling_port():
-    return os.getenv('DUCKLING_HOST', '8000')
+    return os.getenv('DUCKLING_PORT', '8000')
