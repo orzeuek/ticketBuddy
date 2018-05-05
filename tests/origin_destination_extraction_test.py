@@ -1,4 +1,4 @@
-from src.stations_extraction import *
+from src.origin_destination_extraction import *
 
 
 def testExtractForNotFullStationInfo():

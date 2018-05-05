@@ -1,5 +1,5 @@
 import random
-import src.stations_extraction as stations
+import src.origin_destination_extraction as stations
 import src.dates_extraction as dates
 import pprint
 import config.configuration as conf

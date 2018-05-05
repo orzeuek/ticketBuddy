@@ -1,0 +1,70 @@
+[
+  {
+    "text": "I want to travel to Scrabster",
+    "matches": ["Scrabster"]
+  },
+  {
+    "text": "I want to travel from Duffield to Peartree",
+    "matches": ["Duffield", "Peartree"]
+  },
+  {
+    "text": "I want to travel from Peartree to Duffield",
+    "matches": ["Peartree", "Duffield"]
+  },
+  {
+    "text": "I want to travel from Peartree to Erdington",
+    "matches": ["Peartree", "Erdington"]
+  },
+  {
+    "text": "Take me from Duffield to Water Orton",
+    "matches": ["Duffield", "Water Orton×"]
+  },
+  {
+    "text": "I need train tickets from Water Orton to Erdington",
+    "matches": ["Water Orton", "Erdington"]
+  },
+  {
+    "text": "I want to travel from Erdington to Peartree",
+    "matches": ["Erdington", "Peartree"]
+  },
+  {
+    "text": "I want to travel from Water Orton to Peartree",
+    "matches": ["Water Orton", "Peartree"]
+  },
+  {
+    "text": "take me to Duffield buddy",
+    "matches": ["Duffield"]
+  },
+  {
+    "text": "I want to travel to Peartree at Friday",
+    "matches": ["Peartree"]
+  },
+  {
+    "text": "I need train tickets to travel from Water Orton to Duffield tomorrow at 9 am",
+    "matches": ["Water Orton", "Duffield"]
+  },
+  {
+    "text": "Book me tickets between Erdington and Peartree",
+    "matches": ["Erdington", "Peartree"]
+  },
+  {
+    "text": "Plan me a trip to Peartree",
+    "matches": ["Peartree"]
+  },
+  {
+    "text": "Take me to Peartree",
+    "matches": ["Peartree"]
+  },
+  {
+    "text": "I'm in Duffield, but I want to be in Peartree",
+    "matches": ["Duffield", "Peartree"]
+  },
+  {
+    "text": "I need tickets to London Main Station",
+    "matches": ["London Main Station"]
+  },
+  {
+    "text": "Take me from Manchester Airport to Glasgow Central Train Station",
+    "matches": ["Manchester Airport", "Glasgow Central Train Station"]
+  }
+]
