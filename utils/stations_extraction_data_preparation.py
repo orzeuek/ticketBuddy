@@ -1,5 +1,5 @@
 import json
-import sys, os
+import os
 import nltk
 import pprint
 
@@ -8,8 +8,6 @@ import pprint
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = DIR + '/../'
-sys.path.append(ROOT_DIR)
-
 
 def prepare_pos_tagged_sentences(training_set):
     tagged_sentences = [
@@ -32,15 +30,6 @@ def get_trained_unigram_tagger():
     return nltk.UnigramTagger(train_data)
 
 ## already done. Results in /src/assets/training_Sets/stationsExtractionTrainingSet.json
-# prepare_pos_tagged_sentences(json.load(open(ROOT_DIR + '/src/assets/training_Sets/stationsExtractionInput.json')))
+result = prepare_pos_tagged_sentences(json.load(open(ROOT_DIR + '/src/assets/training_Sets/stationsExtractionInput.json')))
 
-tagger = get_trained_unigram_tagger()
-
-train_data_input = json.load(open(ROOT_DIR + '/src/assets/training_Sets/stationsExtractionTrainingSet.json'))
-test_sentence = [{"text": "I want to travel from Manchester Airport to Zgierz"}]
-test_data = prepare_pos_tagged_sentences(test_sentence)
-
-tagged = tagger.tag([element["pos"] for element in test_data[0]])
-
-pprint.pprint(" ".join([element["word"] for element in test_data[0]]))
-pprint.pprint(tagged)
+pprint.pprint(result)

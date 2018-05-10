@@ -275,6 +275,6 @@ def train_stations_classifier():
         data += (json.loads(json_data))
 
     classifier = train_classifier(data)
-    pickle.dump(classifier, open("stations_classifier.p", "wb"))
+    pickle.dump(classifier, open("origin_destination_classifier.p", "wb"))
 
     return classifier

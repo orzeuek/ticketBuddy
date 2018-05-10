@@ -10,7 +10,7 @@ from src.state import *
 import src.state, src.trip_planning_conversation
 import config.configuration as conf
 
-stations_classifier = pickle.load(open(ROOT_DIR + "src/assets/trained_classifiers/stations_classifier.p", "rb"))
+stations_classifier = pickle.load(open(ROOT_DIR + "src/assets/trained_classifiers/origin_destination_classifier.p", "rb"))
 
 
 class Client(object):

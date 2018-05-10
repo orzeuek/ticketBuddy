@@ -1,5 +1,5 @@
 def main():
-    stations_classifier = pickle.load(open(ROOT_DIR + "src/assets/trained_classifiers/stations_classifier.p", "rb"))
+    stations_classifier = pickle.load(open(ROOT_DIR + "src/assets/trained_classifiers/origin_destination_classifier.p", "rb"))
     state_repo = StateRepository(StateStorage(conf.get_redis_host(), conf.get_redis_port()))
     while True:
         input_text = input("input json >")

@@ -21,7 +21,7 @@ def main():
     state = state_repo.get_state(text, session_id)
     state = src.trip_planning_conversation.proceed(
         state,
-        pickle.load(open(ROOT_DIR + "src/assets/trained_classifiers/stations_classifier.p", "rb"))
+        pickle.load(open(ROOT_DIR + "src/assets/trained_classifiers/origin_destination_classifier.p", "rb"))
     )
     pprint.pprint(state)
     if (session_id is not None):
