@@ -7,10 +7,17 @@ ROOT_DIR = DIR + '/../'
 
 def extract(sentence, stations_tagger=None, stations_list=None):
     """
-    it merge 2 strategies:
+    it use 2 strategies:
     1. key-word based search (using predefined list of stations)
     2. free-text search (using UnigramTagger - see categorize_stations() )
+    if there were results from key-word strategy:
+      return them
+    else
+      return results from free-text strategy
+      
     :param sentence: string where we want to find stations
+    :param stations_tagger: UnigramTagger
+    :param stations_list: string[]
     :return: list of tuples:
      [
         ("from", ""),
@@ -19,34 +26,16 @@ def extract(sentence, stations_tagger=None, stations_list=None):
         ("horsham", "STATION"),
      ],
     """
-    stations_tagger = load_trained_tagger() if stations_tagger is None else stations_tagger
     stations_list = load_stations_list() if stations_list is None else stations_list
-
     keywords_result = tag_stations_using_keywords(sentence, stations_list)
+
+    if len(list(filter(lambda token: token[1] == 'STATION', keywords_result))) > 0:
+        return keywords_result
+
+    stations_tagger = load_trained_tagger() if stations_tagger is None else stations_tagger
     tagging_result = categorize_stations(sentence, stations_tagger)
 
-    return merge_results(keywords_result, tagging_result)
-
-def merge_results(result1, result2):
-    """
-
-    :param result1:
-    [
-        ('i', ''), ('want', ''), ('to', ''), ('travel', ''), ('from', ''),
-        ('manchester', ''), ('airport', ''), ('to', ''), ('zgierz', 'STATION')
-    ]
-    :param result2:
-    [
-        ('i', ''), ('want', ''), ('to', ''), ('travel', ''), ('from', ''),
-        ('manchester airport', 'STATION'), ('to', ''), ('zgierz', '')
-    ]
-    :return:
-    [
-        ('i', ''), ('want', ''), ('to', ''), ('travel', ''), ('from', ''),
-        ('manchester airport', 'STATION'), ('to', ''), ('zgierz', 'STATION')
-    ]
-    """
-    pass
+    return tagging_result
 
 
 def load_stations_list():
