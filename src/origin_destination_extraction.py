@@ -1,5 +1,6 @@
 import nltk
 import os, inspect, pickle, json
+import src.stations_extraction
 
 
 def extract(input, classifier=None):
@@ -241,25 +242,26 @@ def tag_stations(sentence, stations_list=None):
         ("horsham", "STATION"),
      ],
     """
-    if stations_list is None:
-        file_path = os.path.dirname(
-            os.path.abspath(inspect.getfile(inspect.currentframe()))
-        ) + '/assets/stations_list.txt'
-        with open(file_path) as f:
-            stations_list = [line.strip().lower() for line in f if len(line.strip()) > 0]
-
-    sentence = sentence.lower()
-    implode_marker = '____'
-    stations_matched = []
-    for station in stations_list:
-        if station in sentence:
-            station_tokenized = implode_marker.join(station.split(" "))
-            sentence = sentence.replace(station, station_tokenized)
-            stations_matched.append(station_tokenized)
-    return [
-        (token.replace(implode_marker, " "), "STATION" if token in stations_matched else "")
-        for token in nltk.tokenize.word_tokenize(sentence)
-        ]
+    return src.stations_extraction.extract(sentence, stations_list=stations_list)
+    # if stations_list is None:
+    #     file_path = os.path.dirname(
+    #         os.path.abspath(inspect.getfile(inspect.currentframe()))
+    #     ) + '/assets/stations_list.txt'
+    #     with open(file_path) as f:
+    #         stations_list = [line.strip().lower() for line in f if len(line.strip()) > 0]
+    #
+    # sentence = sentence.lower()
+    # implode_marker = '____'
+    # stations_matched = []
+    # for station in stations_list:
+    #     if station in sentence:
+    #         station_tokenized = implode_marker.join(station.split(" "))
+    #         sentence = sentence.replace(station, station_tokenized)
+    #         stations_matched.append(station_tokenized)
+    # return [
+    #     (token.replace(implode_marker, " "), "STATION" if token in stations_matched else "")
+    #     for token in nltk.tokenize.word_tokenize(sentence)
+    #     ]
 
 
 def train_stations_classifier():

@@ -2,6 +2,7 @@ import json
 import os
 import nltk
 import pprint
+import src.stations_extraction
 
 # PRO TIP:
 # to see all available POS (part of speech) use:  nltk.help.upenn_tagset()
@@ -11,7 +12,7 @@ ROOT_DIR = DIR + '/../'
 
 def prepare_pos_tagged_sentences(training_set):
     tagged_sentences = [
-        nltk.pos_tag(nltk.word_tokenize(element["text"])) for element in training_set
+        nltk.pos_tag(nltk.word_tokenize(element["text"].lower())) for element in training_set
     ]
 
     json_structure = [
@@ -30,6 +31,8 @@ def get_trained_unigram_tagger():
     return nltk.UnigramTagger(train_data)
 
 ## already done. Results in /src/assets/training_Sets/stationsExtractionTrainingSet.json
-result = prepare_pos_tagged_sentences(json.load(open(ROOT_DIR + '/src/assets/training_Sets/stationsExtractionInput.json')))
+# result = prepare_pos_tagged_sentences(json.load(open(ROOT_DIR + '/src/assets/training_Sets/stationsExtractionInput.json')))
+#
+# pprint.pprint(result)
 
-pprint.pprint(result)
+src.stations_extraction.train_tagger()

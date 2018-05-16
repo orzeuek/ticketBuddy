@@ -66,5 +66,9 @@
   {
     "text": "Take me from Manchester Airport to Glasgow Central Train Station",
     "matches": ["Manchester Airport", "Glasgow Central Train Station"]
-  }
+  },
+  {"text":"from London","matches":["London"]},
+  {"text":"to London","matches":["London"]},
+  {"text":"from Horsham to London","matches":[]},
+  {"text":"between London and Horsham","matches":[]}
 ]
