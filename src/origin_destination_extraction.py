@@ -3,7 +3,7 @@ import os, inspect, pickle, json
 import src.stations_extraction
 
 
-def extract(input, classifier=None):
+def extract(input, classifier):
     """
     :param input:
      {
@@ -12,8 +12,6 @@ def extract(input, classifier=None):
          "text": "I want to buy a ticket from London to Horsham"
      }
     :param classifier:
-     optional parameter. Pass pre-trained classifier for production purposes.
-     For testing do not pass classifier and method will train one for you.
     :return
     [
         {
@@ -25,8 +23,6 @@ def extract(input, classifier=None):
         }
     ]
     """
-    if classifier is None:
-        classifier = train_classifier([input])
 
     features_with_stations = prepare_features_with_stations([input])
     classified = [(classifier.classify(feature), station) for feature, station in features_with_stations]
@@ -242,26 +238,26 @@ def tag_stations(sentence, stations_list=None):
         ("horsham", "STATION"),
      ],
     """
-    return src.stations_extraction.extract(sentence, stations_list=stations_list)
-    # if stations_list is None:
-    #     file_path = os.path.dirname(
-    #         os.path.abspath(inspect.getfile(inspect.currentframe()))
-    #     ) + '/assets/stations_list.txt'
-    #     with open(file_path) as f:
-    #         stations_list = [line.strip().lower() for line in f if len(line.strip()) > 0]
-    #
-    # sentence = sentence.lower()
-    # implode_marker = '____'
-    # stations_matched = []
-    # for station in stations_list:
-    #     if station in sentence:
-    #         station_tokenized = implode_marker.join(station.split(" "))
-    #         sentence = sentence.replace(station, station_tokenized)
-    #         stations_matched.append(station_tokenized)
-    # return [
-    #     (token.replace(implode_marker, " "), "STATION" if token in stations_matched else "")
-    #     for token in nltk.tokenize.word_tokenize(sentence)
-    #     ]
+    # return src.stations_extraction.extract(sentence, stations_list=stations_list)
+    if stations_list is None:
+        file_path = os.path.dirname(
+            os.path.abspath(inspect.getfile(inspect.currentframe()))
+        ) + '/assets/stations_list.txt'
+        with open(file_path) as f:
+            stations_list = [line.strip().lower() for line in f if len(line.strip()) > 0]
+
+    sentence = sentence.lower()
+    implode_marker = '____'
+    stations_matched = []
+    for station in stations_list:
+        if station in sentence:
+            station_tokenized = implode_marker.join(station.split(" "))
+            sentence = sentence.replace(station, station_tokenized)
+            stations_matched.append(station_tokenized)
+    return [
+        (token.replace(implode_marker, " "), "STATION" if token in stations_matched else "")
+        for token in nltk.tokenize.word_tokenize(sentence)
+        ]
 
 
 def train_stations_classifier():

@@ -1,68 +1,133 @@
-dialog_graph = {
-    "dialog_initialization": {
-        "Any": "extract_keywords"
-    },
-    "extract_keywords": {
-        "Any": "has_origin"
-    },
-    "has_origin": {
-        "True": "has_destination",
-        "False": "ask_about_origin_station"
-    },
-    "ask_about_origin_station": {
-        "Any": "has_origin"
-    },
-    "has_destination": {
-        "True": "has_date",
-        "False": "ask_about_destination_station"
-    },
-    "ask_about_destination_station": {
-        "Any": "has_destination"
-    },
-    "has_date": {
-        "True": "has_time",
-        "False": "ask_about_date"
-    },
-    "ask_about_date": {
-        "Any": "has_date"
-    },
-    "has_time": {
-        "True": "send_jp_request",
-        "False": "ask_about_time"
-    },
-    "ask_about_time": {
-        "Any": "has_time"
-    },
-    "send_jp_request": {
-        "Any": "complete"
-    }
-}
+import src.default_extraction as default_extractor
+
 
 def proceed(state, steps_definition, entry_point):
-    """
-    flow:
-      execute steps_definition.entry_point(state)
-      if state has any prompt:
-        return state (show prompt to client)
-
-      if next step is "Any" then execute next step recursively
-      else proceed with next step depending on what was result of entry_point(state) execution (True/False).
-    """
-
-    ## @todo add recursion limit to 3 repetitions.
     current_step_result = getattr(steps_definition, entry_point)(state)
-    if state["prompt"] is not None:
+
+    if current_step_result["prompt"] is not None:
+        return current_step_result
+
+    return proceed(current_step_result, steps_definition, current_step_result["step"])
+
+
+class StepsDefinition:
+
+    def __init__(self, station_classifier):
+        self._stations_classifier = station_classifier
+
+    def dialog_initialization(self, state):
+        state["prompt"] = [
+            "Hello, I'm Jane - train tickets issuing Chatbot",
+            "I will help you find best tickets for you!",
+            "Please tell me where you want travel to, where you want to begin your journey and when you want to depart?"
+        ]
+        state["step"] = "extract"
+
         return state
 
-    possible_steps = dialog_graph[entry_point]
-    if "Any" in possible_steps.keys():
-        next_step_name = possible_steps["Any"]
-        proceed(state, steps_definition, next_step_name)
-    else:
-        proceed(
-            state,
-            steps_definition,
-            possible_steps["True"] if current_step_result is True else possible_steps["False"]
-        )
+    def extract(self, state):
+        state["prompt"] = None
+        default_extractor.extract(state, self._stations_classifier)
 
-    return state
+        state["step"] = "has_origin"
+
+        return state
+
+    def has_origin(self, state):
+        state["prompt"] = None
+        if state["has_origin"] is True:
+            state["step"] = "has_destination"
+        else:
+            state["step"] = "ask_about_origin_station"
+
+        return state
+
+    def ask_about_origin_station(self, state):
+        state["prompt"] = "where are you travel from?"
+        state["step"] = "extract_origin"
+
+        return state
+
+    def extract_origin(self, state):
+        state["prompt"] = None
+        ## @todo replace default extractor with more "smart" one
+        state = default_extractor.extract(state, self._stations_classifier)
+        state["step"] = "has_origin"
+
+        return state
+
+    def has_destination(self, state):
+        state["prompt"] = None
+        if state["has_destination"] is True:
+            state["step"] = "has_date"
+        else:
+            state["step"] = "ask_about_destination_station"
+
+        return state
+
+    def ask_about_destination_station(self, state):
+        state["prompt"] = "where are you travel to?"
+        state["step"] = "extract_destination"
+
+        return state
+
+    def extract_destination(self, state):
+        state["prompt"] = None
+        ## @todo replace default extractor with more "smart" one
+        state = default_extractor.extract(state, self._stations_classifier)
+        state["step"] = "has_destination"
+
+        return state
+
+    def has_date(self, state):
+        state["prompt"] = None
+        if state["has_travel_date"] is True:
+            state["step"] = "has_time"
+        else:
+            state["step"] = "ask_about_date"
+
+        return state
+
+    def ask_about_date(self, state):
+        state["prompt"] = "when do you want to depart?"
+        state["step"] = "extract_date"
+
+        return state
+
+    def extract_date(self, state):
+        state["prompt"] = None
+        ## @todo replace default extractor with more "smart" one
+        state = default_extractor.extract(state, self._stations_classifier)
+        state["step"] = "has_date"
+
+        return state
+
+    def has_time(self, state):
+        state["prompt"] = None
+        if state["has_travel_time"] is True:
+            state["step"] = "send_jp_request"
+        else:
+            state["step"] = "ask_about_time"
+
+        return state
+
+    def ask_about_time(self, state):
+        state["prompt"] = "what time do you want to depart ?"
+        state["step"] = "extract_time"
+
+        return state
+
+    def extract_time(self, state):
+        state["prompt"] = None
+        ## @todo replace default extractor with more "smart" one
+        state = default_extractor.extract(state, self._stations_classifier)
+        state["step"] = "has_time"
+
+        return state
+
+    def send_jp_request(self, state):
+        state["prompt"] = [
+            "Sending request to journey planner !"
+        ]
+
+        return state

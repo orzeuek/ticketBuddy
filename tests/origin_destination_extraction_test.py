@@ -7,7 +7,7 @@ def testExtractForNotFullStationInfo():
         "has_destination": False,
         "text": "I want to go to Horsham"
     }
-    result = extract(input)
+    result = extract(input, train_classifier([input]))
     expected = {
         "has_origin": False,
         "has_destination": True,
@@ -24,7 +24,7 @@ def testExtractForSingleStation():
         "has_destination": False,
         "text": "Horsham"
     }
-    result = extract(input)
+    result = extract(input, train_classifier([input]))
     expected = {
         "has_origin": True,
         "origin": "london",
@@ -41,7 +41,7 @@ def testExtract():
         "has_destination": False,
         "text": "I want to buy a ticket from London to Horsham"
     }
-    result = extract(input)
+    result = extract(input, train_classifier([input]))
     expected = {
         "has_origin": True,
         "origin": "london",

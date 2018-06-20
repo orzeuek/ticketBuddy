@@ -53,7 +53,7 @@ def train_tagger():
     Get new, freshly trained instance of UnigramTagger.
     :return:
     """
-    train_data_input = json.load(open(ROOT_DIR + '/src/assets/training_Sets/stationsExtractionTrainingSet.json'))
+    train_data_input = json.load(open(ROOT_DIR + '/src/assets/training_sets/stationsExtractionTrainingSet.json'))
     train_data = [[(element["pos"], element["classification"]) for element in sentence] for sentence in
                   train_data_input]
     tagger = nltk.UnigramTagger(train_data)
