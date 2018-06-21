@@ -73,6 +73,21 @@ https://github.com/facebook/duckling
 it's pretty awesome :) Take a look at dates_extraction package for more details.
 No magic there.
 
+### compatibility
+
+This project should be compliant with RSPS7012 (RSP Standard) - currently 
+(21-06-2018) it's just a draft. One of most important paragraphs of that standard is
+1.2.3 which state:
+```
+Retailing of rail product via the AI Voice Service Sales Channel is restricted to:
+• 1 Passenger
+• Adult or Child
+• Railcard Discounts (max 1-person traveller, i.e. no Two Together Railcard)
+• Advance Single products
+• One direction of travel
+```
+ 
+
 ## current work progress:
 
 - docker friendly environment available
