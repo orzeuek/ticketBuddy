@@ -1,7 +1,19 @@
 import src.default_extraction as default_extractor
+import src.origin_destination_extraction as orig_dest_extractor
+import abc
 
 
-def proceed(state, steps_definition, entry_point):
+class StepsDefinitionInterface:
+
+    def __init__(self, station_classifier):
+        self._stations_classifier = station_classifier
+
+    @abc.abstractmethod
+    def dialog_initialization(self, state):
+        pass
+
+
+def proceed(state, steps_definition: StepsDefinitionInterface, entry_point="dialog_initialization"):
     current_step_result = getattr(steps_definition, entry_point)(state)
 
     if current_step_result["prompt"] is not None:
@@ -17,7 +29,7 @@ class StepsDefinition:
 
     def dialog_initialization(self, state):
         state["prompt"] = [
-            "Hello, I'm Jane - train tickets issuing Chatbot",
+            "Hello, my name is Jane - train tickets issuing Chatbot",
             "I will help you find best tickets for you!",
             "Please tell me where you want travel to, where you want to begin your journey and when you want to depart?"
         ]
@@ -43,7 +55,7 @@ class StepsDefinition:
         return state
 
     def ask_about_origin_station(self, state):
-        state["prompt"] = "where are you travel from?"
+        state["prompt"] = ["where are you travel from?"]
         state["step"] = "extract_origin"
 
         return state
@@ -51,7 +63,11 @@ class StepsDefinition:
     def extract_origin(self, state):
         state["prompt"] = None
         ## @todo replace default extractor with more "smart" one
-        state = default_extractor.extract(state, self._stations_classifier)
+        # state = default_extractor.extract(state, self._stations_classifier)
+
+        ## replaced
+        orig_dest_extractor.extract(state, self._stations_classifier)
+
         state["step"] = "has_origin"
 
         return state
@@ -66,7 +82,7 @@ class StepsDefinition:
         return state
 
     def ask_about_destination_station(self, state):
-        state["prompt"] = "where are you travel to?"
+        state["prompt"] = ["where are you travel to?"]
         state["step"] = "extract_destination"
 
         return state
@@ -74,7 +90,11 @@ class StepsDefinition:
     def extract_destination(self, state):
         state["prompt"] = None
         ## @todo replace default extractor with more "smart" one
-        state = default_extractor.extract(state, self._stations_classifier)
+        # state = default_extractor.extract(state, self._stations_classifier)
+
+        ## replaced
+        orig_dest_extractor.extract(state, self._stations_classifier)
+
         state["step"] = "has_destination"
 
         return state
@@ -89,7 +109,7 @@ class StepsDefinition:
         return state
 
     def ask_about_date(self, state):
-        state["prompt"] = "when do you want to depart?"
+        state["prompt"] = ["when do you want to depart?"]
         state["step"] = "extract_date"
 
         return state
@@ -112,7 +132,7 @@ class StepsDefinition:
         return state
 
     def ask_about_time(self, state):
-        state["prompt"] = "what time do you want to depart ?"
+        state["prompt"] = ["what time do you want to depart ?"]
         state["step"] = "extract_time"
 
         return state
@@ -131,3 +151,5 @@ class StepsDefinition:
         ]
 
         return state
+
+

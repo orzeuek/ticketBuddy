@@ -32,6 +32,7 @@ import requests
 import json
 import datetime
 
+
 class DatesService:
 
     def __init__(self, base_uri):
