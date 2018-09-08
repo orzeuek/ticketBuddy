@@ -1,4 +1,8 @@
 # NO STABLE RELEASE YET !
+Project abandoned!
+
+I couldn't find good enough data source to train model ....
+
 
 # Ticket Buddy
 Chatbot project who plan a trip journey through UK for you
